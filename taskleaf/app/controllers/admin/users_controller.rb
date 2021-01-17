@@ -6,21 +6,16 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to admin_user_url(@user) , notice: "ユーザー「#{}」を登録しました"
+      redirect_to admin_user_url(@user) , notice: "ユーザー「#{@user.name}」を登録しました"
     else
-      flash[:error] = "Something went wrong"
-      render 'new'
+      render :new
     end
   end
   
+  private
 
-  def edit
-
+  def user_params
+    params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation)
   end
-
-  def show
-  end
-
-  def index
-  end
+  
 end
